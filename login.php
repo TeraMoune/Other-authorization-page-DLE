@@ -173,10 +173,10 @@ if( $config['allow_social'] AND $config['allow_registration'] AND !$is_logged ) 
 }		
 		
 	if($_SERVER['REQUEST_METHOD'] == 'POST') $tpl->set( '{class}', "ajax-login" );
-    else $tpl->set( '{class}', "" );
+	else $tpl->set( '{class}', "" );
 	
 	if($_SERVER['REQUEST_METHOD'] == 'POST') $tpl->set( '{btnClose}', "<button type=\"button\" class=\"mfp-close\">×</button>" );
-    else $tpl->set( '{btnClose}', "" );
+	else $tpl->set( '{btnClose}', "" );
 	
 	$tpl->set( '{registration-link}', $PHP_SELF . "?do=register" );
 	$tpl->set( '{lostpassword-link}', $PHP_SELF . "?do=lostpassword" );
