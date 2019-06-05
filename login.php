@@ -6,7 +6,8 @@ if( !defined('DATALIFEENGINE') ) {
 }
 
 if( $is_logged ) {
-	header( "Location: {$_SERVER['PHP_SELF']}" );		
+	header( "Location: {$_SERVER['PHP_SELF']}" );
+	die();
 } else {
 	$tpl->load_template( 'login_page.tpl' );
 		
