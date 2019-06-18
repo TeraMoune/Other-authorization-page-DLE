@@ -182,7 +182,8 @@ if( $config['allow_social'] AND $config['allow_registration'] AND !$is_logged ) 
     	} else {
 		
 		$tpl->set( '{class}', "" );
-		$tpl->set( '{formAction}', '/?' . $_SERVER['QUERY_STRING'] );
+		if( $config['allow_alt_url'] ) $tpl->set( '{formAction}', '/login.html' );
+		else $tpl->set( '{formAction}', '/?do=login' );
 		$tpl->set( '{btnClose}', "" );
 		
 	}
@@ -192,7 +193,7 @@ if( $config['allow_social'] AND $config['allow_registration'] AND !$is_logged ) 
 	$tpl->set( '{login-method}', $config['auth_metod'] ? "E-Mail:" : $lang['login_metod'] );
 	$tpl->compile( 'content' );
 	
-	if( $_SERVER['REQUEST_METHOD'] == 'POST' AND $_SERVER['HTTP_REFERER'] != $config['http_home_url'] . '?do=login' OR $_SERVER['HTTP_REFERER'] != $config['http_home_url'] . 'login.html') {
+	if( $_SERVER['REQUEST_METHOD'] == 'POST' AND ($_SERVER['HTTP_REFERER'] != $config['http_home_url'] . 'login.html' AND $_SERVER['HTTP_REFERER'] != $config['http_home_url'] . '?do=login') ) {
 		
 		AjaxTpl();
 		exit;
