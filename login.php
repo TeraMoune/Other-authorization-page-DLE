@@ -173,20 +173,30 @@ if( $config['allow_social'] AND $config['allow_registration'] AND !$is_logged ) 
 	$tpl->set( '{yandex_url}', '' );
 }		
 		
-	if($_SERVER['REQUEST_METHOD'] == 'POST') $tpl->set( '{class}', "ajax-login" );
-	else $tpl->set( '{class}', "" );
-	
-	if($_SERVER['REQUEST_METHOD'] == 'POST') $tpl->set( '{btnClose}', "<button type=\"button\" class=\"mfp-close\">×</button>" );
-	else $tpl->set( '{btnClose}', "" );
+	if( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
+		
+		$tpl->set( '{class}', "ajax-login" );
+		$tpl->set( '{formAction}', "/" );
+		$tpl->set( '{btnClose}', "<button type=\"button\" class=\"mfp-close\">×</button>" );
+		
+    	} else {
+		
+		$tpl->set( '{class}', "" );
+		$tpl->set( '{formAction}', '/?' . $_SERVER['QUERY_STRING'] );
+		$tpl->set( '{btnClose}', "" );
+		
+	}
 	
 	$tpl->set( '{registration-link}', $PHP_SELF . "?do=register" );
 	$tpl->set( '{lostpassword-link}', $PHP_SELF . "?do=lostpassword" );
 	$tpl->set( '{login-method}', $config['auth_metod'] ? "E-Mail:" : $lang['login_metod'] );
 	$tpl->compile( 'content' );
 	
-	if($_SERVER['REQUEST_METHOD'] == 'POST'){
-		echo str_ireplace( '{THEME}', $config['http_home_url'] . 'templates/' . $config['skin'], $tpl->result['info'].$tpl->result['content'] );
+	if( $_SERVER['REQUEST_METHOD'] == 'POST' AND $_SERVER['HTTP_REFERER'] != $config['http_home_url'] . '?do=login' OR $_SERVER['HTTP_REFERER'] != $config['http_home_url'] . 'login.html') {
+		
+		AjaxTpl();
 		exit;
+		
 	}
 	
 	$tpl->clear();
