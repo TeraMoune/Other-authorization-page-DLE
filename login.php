@@ -5,6 +5,11 @@ if( !defined('DATALIFEENGINE') ) {
 	die( "Hacking attempt!" );
 }
 
+function AjaxTpl(){
+global $tpl, $config;
+echo str_replace('{THEME}', '/templates/'.$config['skin'], $tpl->result['info'].$tpl->result['content']);
+}
+
 if( $is_logged ) {
 	header( "Location: {$_SERVER['PHP_SELF']}" );
 	die();
